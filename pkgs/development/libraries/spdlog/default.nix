@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, cmake, fmt_8, fetchpatch
+{ lib, stdenv, fetchFromGitHub, cmake, fmt ? fmt_8, fetchpatch
 , staticBuild ? stdenv.hostPlatform.isStatic
 }:
 
@@ -24,7 +24,7 @@ let
 
       nativeBuildInputs = [ cmake ];
       # spdlog <1.3 uses a bundled version of fmt
-      propagatedBuildInputs = lib.optional (lib.versionAtLeast version "1.3") fmt_8;
+      propagatedBuildInputs = lib.optional (lib.versionAtLeast version "1.3") fmt;
 
       cmakeFlags = [
         "-DSPDLOG_BUILD_SHARED=${if staticBuild then "OFF" else "ON"}"
